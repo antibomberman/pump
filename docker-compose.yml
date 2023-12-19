@@ -1,0 +1,125 @@
+version: '3'
+networks:
+    laravel:
+        driver: bridge
+services:
+#    nginx:
+#        image: nginx:latest
+#        container_name: nginx
+#        ports:
+#            - "80:80"
+#            - "443:443"
+#        volumes:
+#            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+#            - .:/var/www/html
+#            - ./docker/certbot/conf:/etc/letsencrypt
+#            - ./docker/certbot/www:/var/www/certbot
+#        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+#        depends_on:
+#            - app
+#        networks:
+#            - laravel
+#    certbot:
+#        container_name: certbot
+#        image: certbot/certbot
+#        restart: unless-stopped
+#        volumes:
+#            - ./docker/certbot/conf:/etc/letsencrypt
+#            - ./docker/certbot/www:/var/www/certbot
+#        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+#    app:
+#        build:
+#            context: .
+#            dockerfile: docker/Dockerfile
+#        ports:
+#            - "9000:9000"
+#            - "6001:6001"
+#        volumes:
+#            - .:/var/www/html
+#        container_name: app
+#        environment:
+#            - CONTAINER_MODE=app
+#            - APP_WITH_SCHEDULER=true
+#            - DB_HOST=database
+#            - DB_DATABASE=lara_laravel
+#            - DB_USERNAME=userBack2023Laravel
+#            - DB_PASSWORD=UBOBJhMxSwo/XlB1uj9dm8
+#            - REDIS_HOST=redis
+#            - QUEUE_CONNECTION=redis
+#        depends_on:
+#            - db
+#            - redis
+#        networks:
+#            - laravel
+#    db:
+#        image: mysql:5.7
+#        container_name: database
+#        restart: unless-stopped
+#        environment:
+#            - MYSQL_DATABASE=lara_laravel
+#            - MYSQL_ROOT_PASSWORD=userBack2023Laravel
+#            - MYSQL_USER=userBack2023Laravel
+#            - MYSQL_PASSWORD=UBOBJhMxSwo/XlB1uj9dm8
+#        ports:
+#            - "3306:3306"
+#        command: --max_allowed_packet=32505856
+#        volumes:
+#            - ./docker/mysql/tmp:/var/lib/mysql
+#        networks:
+#            - laravel
+#    redis:
+#        image: redis:latest
+#        container_name: redis
+#        volumes:
+#            - ./docker/redis/tmp:/data
+#        networks:
+#            - laravel
+#        ports:
+#            - "6379:6379"
+#        command: ["redis-server", "--bind", "redis", "--port", "6379"]
+
+
+    node:
+        build:
+            context: .
+            dockerfile: docker/node/Dockerfile
+        ports:
+            - "3000:3000"
+        container_name: node
+        volumes:
+            - ./node:/node
+#            - ./docker/certbot/conf:/node/certbot
+#        links:
+#            - redis
+#        environment:
+#            - REDIS_HOST=redis
+#            - REDIS_PORT=6379
+        command: node server.js
+#        depends_on:
+#            - db
+#            - redis
+        networks:
+            - laravel
+
+#    backup:
+#        image: databack/mysql-backup
+#        restart: always
+#        depends_on:
+#            - db
+#        user: root
+#        environment:
+#            DB_SERVER: database
+#            DB_PORT: 3306
+#            DB_USER: userBack2023Laravel
+#            DB_PASS: UBOBJhMxSwo/XlB1uj9dm8
+#            DB_NAMES: lara_laravel
+#            DB_DUMP_TARGET: /dump
+#            DB_DUMP_BY_SCHEMA: "true"
+#            DB_DUMP_FREQ: 360
+#            COMPRESSION: gzip
+#            DB_DUMP_SAFECHARS: "true"
+#        volumes:
+#            - "./docker/backup/dump:/dump"
+#            - "./docker/backup/tmp:/tmp"
+#        networks:
+#            - laravel
