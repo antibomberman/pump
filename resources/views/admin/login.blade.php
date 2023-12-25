@@ -36,7 +36,7 @@
             <form action="{{route('admin.auth')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" name="login" class="form-control" required placeholder="логин">
+                    <input type="text" name="email" class="form-control" required placeholder="email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <i class="fas fa-user"></i>

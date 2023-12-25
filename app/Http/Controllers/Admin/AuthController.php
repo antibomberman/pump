@@ -21,12 +21,16 @@ class AuthController extends Controller
 
     public function auth(AuthRequest $request)
     {
-        $user = User::whereLogin($request->get('login'))->first();
+        $user = User::whereEmail($request->get('email'))->first();
+        if (! $user) {
+            return back()->withErrors('Неправильный логин');
+        }
 
-        if (!Hash::check($request->get('password'), $user->password)) {
+        if (! Hash::check($request->get('password'), $user->password)) {
             return back()->withErrors('Неправильный пароль');
         }
         Auth::login($user, 1);
+
         return to_route('admin.login');
     }
 

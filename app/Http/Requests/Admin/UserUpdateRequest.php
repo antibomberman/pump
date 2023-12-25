@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,12 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users'],
-            'password' => ['required', 'max:255'],
         ];
     }
 
     public function messages()
     {
         return [
-            'login.exists' => 'неверный логин',
         ];
     }
 }
