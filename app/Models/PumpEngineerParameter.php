@@ -11,7 +11,6 @@ class PumpEngineerParameter extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-
     protected $fillable = [
         'TypeHP',
         'rekupMode',
@@ -145,5 +144,10 @@ class PumpEngineerParameter extends Model implements Auditable
         'P78',
         'P114',
         'P115',
+    ];
+
+    protected $hidden = [
+        'id',
+        'pump_id',
     ];
 }

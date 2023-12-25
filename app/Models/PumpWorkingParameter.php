@@ -70,4 +70,8 @@ class PumpWorkingParameter extends Model implements Auditable
         'AO1',
         'AO2',
     ];
+    protected $hidden = [
+        'id',
+        'pump_id',
+    ];
 }
